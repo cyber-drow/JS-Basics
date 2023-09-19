@@ -1,29 +1,23 @@
-const arr = ['30-02-2022', 'тест', '11/12/2023', '00/13/2022', '41/12/2023'];
+const cardNumber = '4561-2612-1234-5464';
 
-const valide = (arr) => {
-	if (arr[0] <= 30 && (arr[1] <=12 && arr[1] > 0)) {
-		return true;
-	}
+const checkLuna = (card) => {
+	
+	const cardArr = card.replaceAll('-', '').split('');
+
+	const modCard = cardArr.map((el, i) => {
+		if (i % 2 === 0) {
+			if (el * 2 > 9) {
+				return el * 2 - 9 ;
+			} return el * 2;
+		}
+		return el;
+	});
+
+	const resultLuna = modCard.reduce((acc, valuemodCard) => {
+		return acc += valuemodCard * 1;
+	}, 0);
+
+	return resultLuna % 10 === 0 ? true : false;
 }
 
-const changeIndex = (arr) => [arr[0], arr[1]] = [arr[1], arr[0]];
-
-const dateArray = (arr) => {
-	const arrMap = arr.map(el => {
-	if (el.includes('-')) {
-		if (valide(el.split('-'))) {
-			return el;
-		} 
-	} else if (el.includes('/')) {
-			let change = el.split('/')
-			changeIndex(change);
-			if (valide(change)){
-				return change.join('-');
-			} 
-	}
-})
-	const dateFilter = arrMap.filter(el => el);
-	return dateFilter
-}
-
-console.log(dateArray(arr))
+console.log(checkLuna(cardNumber));
